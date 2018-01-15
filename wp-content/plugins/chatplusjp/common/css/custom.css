@@ -1,0 +1,16 @@
+.ad_top_left,
+.ad_top_right,
+.ad_btm_left,
+.ad_btm_right{
+	width:48%;
+	float:left;
+	margin:50px 4px;
+	display: inline-block;
+}
+
+
+.ad_top,
+.ad_btm{
+	width:98%;
+	margin:50px 4px;
+}

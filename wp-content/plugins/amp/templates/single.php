@@ -8,9 +8,25 @@
 		<?php $this->load_parts( array( 'style' ) ); ?>
 		<?php do_action( 'amp_post_template_css', $this ); ?>
 	</style>
+	<script async custom-element="amp-analytics" src="https://cdn.ampproject.org/v0/amp-analytics-0.1.js"></script>
 </head>
 
 <body class="<?php echo esc_attr( $this->get( 'body_class' ) ); ?>">
+	<amp-analytics type="googleanalytics" id="analytics1">
+		<script type="application/json">
+		{
+		  "vars": {
+		    "account": "UA-111770259-2"
+		  },
+		  "triggers": {
+		    "trackPageview": {
+		      "on": "visible",
+		      "request": "pageview"
+		    }
+		  }
+		}
+		</script>
+	</amp-analytics>
 
 <?php $this->load_parts( array( 'header-bar' ) ); ?>
 

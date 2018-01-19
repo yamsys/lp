@@ -3,7 +3,7 @@
 * Plugin Name: VK All in One Expansion Unit
 * Plugin URI: http://ex-unit.vektor-inc.co.jp
 * Description: This plug-in is an integrated plug-in with a variety of features that make it powerful your web site. Many features can be stopped individually. Example Facebook Page Plugin,Social Bookmarks,Print OG Tags,Print Twitter Card Tags,Print Google Analytics tag,New post widget,Insert Related Posts and more!
-* Version: 5.7.8
+* Version: 5.8.2
 * Author: Vektor,Inc.
 * Text Domain: vkExUnit
 * Domain Path: /languages
@@ -94,3 +94,9 @@ function vkExUnit_phpversion_warning_notice($val){
     <?php
     return $val;
 }
+
+// add_filter('vk-admin-is-dashboard-active','vk_dashboard_hidden');
+// function vk_dashboard_hidden(){
+// 	return false;
+// }
+// remove_action( 'wp_dashboard_setup',array( 'Vk_Admin', 'dashboard_widget'),1 );

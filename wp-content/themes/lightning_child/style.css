@@ -1,8 +1,31 @@
 /*
 Theme Name:     lightning_child
-Description:    
+Description:
 Author:         010222
 Template:       lightning
 
 (optional values you can add: Theme URI, Author URI, Version, License, License URI, Tags, Text Domain)
 */
+.yamsys_lp_news {
+  font-size: 20px;
+  font-weight: 100;
+  color: red;
+}
+
+.yamsys_lp_news_date {
+  font-size: 14px;
+  color: red;
+}
+
+.yamsys_lp_news_title {
+  font-size: 14px;
+  color: black;
+}
+
+.yamsys_lp_news_hr {
+  border-top: 1px solid #8c8b8b;
+}
+
+.yamsys_lp_hr {
+  border-top: 1px solid red;
+}

@@ -29,3 +29,14 @@ Template:       lightning
 .yamsys_lp_hr {
   border-top: 1px solid red;
 }
+
+.yamsys_lp_service_h1 {
+  text-align: center;
+  color: blue;
+  font-weight: bold;
+  font-size: 46px;
+}
+
+.yamsys_lp_service_title {
+  border-bottom: solid 2px orange;
+}

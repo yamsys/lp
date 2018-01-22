@@ -7,19 +7,36 @@
 <?php global $lightning_theme_options;
 $lightning_theme_options = get_option('lightning_theme_options'); ?>
 <?php wp_head();?>
-
 <script>
 document.addEventListener( 'wpcf7mailsent', function( event ) {
     if('40' == event.detail.contactFormId){
       ga('send', 'event', 'recruit_affairs', 'submit');
-    } elseif('61' == event.detail.contactFormId) {
+}
+}, false );
+</script>
+
+<script>
+document.addEventListener( 'wpcf7mailsent', function( event ) {
+    if('61' == event.detail.contactFormId){
       ga('send', 'event', 'recruit_sales', 'submit');
-    } elseif('62' == event.detail.contactFormId) {
+}
+}, false );
+</script>
+
+<script>
+document.addEventListener( 'wpcf7mailsent', function( event ) {
+    if('62' == event.detail.contactFormId){
       ga('send', 'event', 'recruit_system', 'submit');
-    } elseif('63' == event.detail.contactFormId) {
+}
+}, false );
+</script>
+
+<script>
+document.addEventListener( 'wpcf7mailsent', function( event ) {
+    if('63' == event.detail.contactFormId){
       ga('send', 'event', 'recruit_marketing', 'submit');
-    }
-  }, false );
+}
+}, false );
 </script>
 
 </head>

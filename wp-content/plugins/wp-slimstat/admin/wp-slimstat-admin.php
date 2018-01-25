@@ -4,9 +4,9 @@ class wp_slimstat_admin {
 	public static $screens_info = array();
 	public static $config_url = '';
 	public static $faulty_fields = array();
-	
+
 	protected static $admin_notice = '';
-	
+
 	/**
 	 * Init -- Sets things up.
 	 */
@@ -19,7 +19,7 @@ class wp_slimstat_admin {
 
 		// If a localization does not exist, use English
 		if ( !isset( $l10n[ 'wp-slimstat' ] ) ) {
-			load_textdomain( 'wp-slimstat', WP_PLUGIN_DIR .'/wp-slimstat/languages/wp-slimstat-en_US.mo' );
+			load_textdomain( 'wp-slimstat', WP_PLUGIN_DIR .'/wp-slimstat/languages/wp-slimstat-ja_JP.mo' );
 		}
 
 		// Define the default screens
@@ -141,7 +141,7 @@ class wp_slimstat_admin {
 					add_action( 'admin_enqueue_scripts', array( __CLASS__, 'wp_slimstat_stylesheet' ) );
 				}
 			}
-			
+
 			// Add some inline CSS to customize the icon associated to Slimstat in the sidebar
 			add_action( 'admin_enqueue_scripts', array( __CLASS__, 'wp_slimstat_stylesheet_icon' ) );
 
@@ -155,10 +155,10 @@ class wp_slimstat_admin {
 		if ( ( !empty( $_GET[ 'page' ] ) && strpos( $_GET[ 'page' ], 'slimview' ) !== false ) || (!empty($_POST['action']) && $_POST['action'] == 'slimstat_load_report')){
 			include_once(dirname(__FILE__).'/view/wp-slimstat-reports.php');
 			wp_slimstat_reports::init();
-			
+
 			if ( !empty( $_POST[ 'report_id' ] ) ) {
 				$report_id = sanitize_title( $_POST[ 'report_id' ], 'slim_p0_00' );
-				
+
 				if ( !empty( wp_slimstat_reports::$reports_info[ $report_id ] ) ) {
 					add_action('wp_ajax_slimstat_load_report', array( 'wp_slimstat_reports', 'callback_wrapper' ), 10, 2 );
 				}
@@ -189,14 +189,14 @@ class wp_slimstat_admin {
 			add_action( 'wp_ajax_slimstat_manage_filters', array( __CLASS__, 'manage_filters' ) );
 			add_action( 'wp_ajax_slimstat_delete_pageview', array( __CLASS__, 'delete_pageview' ) );
 		}
-		
+
 		// Hide plugins
 		if ( wp_slimstat::$settings[ 'hide_addons' ] == 'on' ) {
 			add_filter( 'all_plugins', array( __CLASS__, 'hide_addons' ) );
 		}
 	}
 	// end init
-	
+
 	/**
 	 * Clears the purge cron job
 	 */
@@ -215,14 +215,14 @@ class wp_slimstat_admin {
 		// wp_slimstat::$settings = get_option( 'slimstat_options', array() );
 	}
 	// end new_blog
-	
+
 	/**
 	 * Support for WP MU site deletion
 	 */
 	public static function drop_tables( $_tables = array(), $_blog_id = 1) {
 		$_tables[ 'slim_events' ] = $GLOBALS[ 'wpdb' ]->prefix . 'slim_events';
 		$_tables[ 'slim_stats' ] = $GLOBALS[ 'wpdb' ]->prefix . 'slim_stats';
-		
+
 		$_tables[ 'slim_events_archive' ] = $GLOBALS[ 'wpdb' ]->prefix . 'slim_events_archive';
 		$_tables[ 'slim_stats_archive' ] = $GLOBALS[ 'wpdb' ]->prefix . 'slim_stats_archive';
 
@@ -289,7 +289,7 @@ class wp_slimstat_admin {
 				category VARCHAR(256) DEFAULT NULL,
 				author VARCHAR(64) DEFAULT NULL,
 				content_id BIGINT(20) UNSIGNED DEFAULT 0,
-				
+
 				outbound_resource VARCHAR(2048) DEFAULT NULL,
 
 				dt_out INT(10) UNSIGNED DEFAULT 0,
@@ -309,12 +309,12 @@ class wp_slimstat_admin {
 				position VARCHAR(32) DEFAULT NULL,
 				id INT UNSIGNED NOT NULL DEFAULT 0,
 				dt INT(10) UNSIGNED DEFAULT 0,
-				
+
 				CONSTRAINT PRIMARY KEY (event_id),
 				INDEX idx_{$GLOBALS['wpdb']->prefix}slim_stat_events (dt),
 				CONSTRAINT fk_{$GLOBALS['wpdb']->prefix}slim_events_id FOREIGN KEY (id) REFERENCES {$GLOBALS['wpdb']->prefix}slim_stats(id) ON UPDATE CASCADE ON DELETE CASCADE
 			) COLLATE utf8_general_ci $use_innodb";
-			
+
 		$archive_table_sql = "
 			CREATE TABLE IF NOT EXISTS {$GLOBALS['wpdb']->prefix}slim_stats_archive
 			LIKE {$GLOBALS['wpdb']->prefix}slim_stats";
@@ -329,7 +329,7 @@ class wp_slimstat_admin {
 				position VARCHAR(32) DEFAULT NULL,
 				id INT UNSIGNED NOT NULL DEFAULT 0,
 				dt INT(10) UNSIGNED DEFAULT 0,
-				
+
 				CONSTRAINT PRIMARY KEY (event_id),
 				INDEX idx_{$GLOBALS['wpdb']->prefix}slim_stat_events_archive (dt)
 			) COLLATE utf8_general_ci $use_innodb";
@@ -401,7 +401,7 @@ class wp_slimstat_admin {
 					position VARCHAR(32) DEFAULT NULL,
 					id INT UNSIGNED NOT NULL DEFAULT 0,
 					dt INT(10) UNSIGNED DEFAULT 0,
-					
+
 					CONSTRAINT PRIMARY KEY (event_id),
 					INDEX idx_{$GLOBALS['wpdb']->prefix}slim_stat_events_archive (dt)
 				) COLLATE utf8_general_ci $use_innodb";
@@ -522,7 +522,7 @@ class wp_slimstat_admin {
 	   	}
 	}
 	// end wp_slimstat_stylesheet
-	
+
 	/**
 	 * Customizes the icon associated to Slimstat in the sidebar
 	 */
@@ -578,7 +578,7 @@ class wp_slimstat_admin {
 		if ( wp_slimstat::$settings[ 'use_separate_menu' ] == 'on' || is_network_admin() ) {
 			$parent = 'slimview1';
 			$page_location = 'slimstat';
-			$new_entry[] = add_menu_page(__('Slimstat','wp-slimstat'), __('Slimstat','wp-slimstat'), $minimum_capability, $parent, array( __CLASS__, 'wp_slimstat_include_view' ) );	
+			$new_entry[] = add_menu_page(__('Slimstat','wp-slimstat'), __('Slimstat','wp-slimstat'), $minimum_capability, $parent, array( __CLASS__, 'wp_slimstat_include_view' ) );
 		}
 		else {
 			$parent = 'admin.php';
@@ -636,7 +636,7 @@ class wp_slimstat_admin {
 
 			$frontend_filter = '';
 			if ( !is_admin() ) {
-				$frontend_filter = '&amp;fs%5Bresource%5D=contains+' . urlencode( wp_slimstat::get_request_uri() ); 
+				$frontend_filter = '&amp;fs%5Bresource%5D=contains+' . urlencode( wp_slimstat::get_request_uri() );
 			}
 
 			$GLOBALS[ 'wp_admin_bar' ]->add_menu( array(
@@ -667,7 +667,7 @@ class wp_slimstat_admin {
 	 */
 	public static function wp_slimstat_add_config_menu($_s){
 		wp_slimstat::$settings[ 'capability_can_admin' ] = empty( wp_slimstat::$settings[ 'capability_can_admin' ] ) ? 'activate_plugins' : wp_slimstat::$settings[ 'capability_can_admin' ];
-		
+
 		// If this user is whitelisted, we use the minimum capability
 		$minimum_capability = 'read';
 		if ( ( strpos( wp_slimstat::$settings[ 'can_admin' ], $GLOBALS[ 'current_user' ]->user_login ) === false ) && ( $GLOBALS[ 'current_user' ]->user_login != 'slimstatadmin' ) && !empty( wp_slimstat::$settings[ 'capability_can_admin' ] ) ) {
@@ -680,7 +680,7 @@ class wp_slimstat_admin {
 		else {
 			$new_entry = add_submenu_page( null, __( 'Settings','wp-slimstat' ), __( 'Settings','wp-slimstat' ), $minimum_capability, 'slimconfig', array( __CLASS__, 'wp_slimstat_include_config' ) );
 		}
-		
+
 		// Load styles and Javascript needed to make the reports look nice and interactive
 		add_action( 'load-' . $new_entry, array( __CLASS__, 'wp_slimstat_stylesheet' ) );
 		add_action('load-'.$new_entry, array(__CLASS__, 'wp_slimstat_enqueue_scripts'));
@@ -831,7 +831,7 @@ class wp_slimstat_admin {
 	public static function show_admin_notice() {
 		echo '<div class="notice slimstat-notice" style="padding:10px"><span>'.self::$admin_notice.'</span></div>';
 	}
-	
+
 	/**
 	 * Handles the Ajax request to hide the admin notice
 	 */
@@ -858,7 +858,7 @@ class wp_slimstat_admin {
 			default:
 				break;
 		}
-		
+
 		die();
 	}
 
@@ -939,7 +939,7 @@ class wp_slimstat_admin {
 	}
 
 	/*
-	 * Displays the options 
+	 * Displays the options
 	 */
 	public static function display_settings( $_settings = array(), $_current_tab = 1 ) { ?>
 		<form action="<?php echo self::$config_url.$_current_tab ?>" method="post" id="form-slimstat-options-tab-<?php echo $_current_tab ?>">
@@ -972,7 +972,7 @@ class wp_slimstat_admin {
 								data-size="mini" data-handle-width="50" data-on-color="warning" data-on-text="Network" data-off-text="Site">' : '';
 
 					if ( !isset( wp_slimstat::$settings[ $_setting_slug ] ) && !isset( $_setting_info[ 'skip_update' ] ) && !isset( $_setting_info[ 'readonly' ] ) && $_setting_info[ 'type' ] != 'section_header') {
-						wp_slimstat::$settings[ $_setting_slug ] = ''; 
+						wp_slimstat::$settings[ $_setting_slug ] = '';
 					}
 
 					echo '<tr' . ( $i % 2 == 0 ? ' class="alternate"' : '' ) . '>';
@@ -992,7 +992,7 @@ class wp_slimstat_admin {
 									<input class="slimstat-checkbox-toggle" type="checkbox"' . $is_readonly . '
 										name="options[' . $_setting_slug . ']"
 										id="' . $_setting_slug . '"
-										data-size="mini" data-handle-width="50" data-on-color="success"' . 
+										data-size="mini" data-handle-width="50" data-on-color="success"' .
 										( ( isset( wp_slimstat::$settings[ $_setting_slug ] ) && wp_slimstat::$settings[ $_setting_slug ] == 'on' ) ? ' checked="checked"' : '' ) . '
 										data-on-text="' . ( !empty( $_setting_info[ 'custom_label_on' ] ) ? $_setting_info[ 'custom_label_on' ] : __( 'On', 'wp-slimstat' ) ) . '"
 										data-off-text="' . ( !empty( $_setting_info[ 'custom_label_off' ] ) ? $_setting_info[ 'custom_label_off' ] : __( 'Off', 'wp-slimstat' ) ) . '">' .
@@ -1018,7 +1018,7 @@ class wp_slimstat_admin {
 								<span class="description">' . $_setting_info[ 'long_description' ] . '</span>
 							</td>';
 							break;
-							
+
 						case 'text':
 						case 'integer':
 							$empty_value = ( $_setting_info[ 'type' ] == 'text' ) ? '' : '0';
@@ -1067,7 +1067,7 @@ class wp_slimstat_admin {
 	}
 
 	/*
-	 * Updates the options 
+	 * Updates the options
 	 */
 	public static function update_settings( $_settings = array() ) {
 
